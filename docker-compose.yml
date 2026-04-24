@@ -1,20 +1,13 @@
 services:
-  # 前端 (Nginx)
   web:
     build: .
     ports:
-      - "3000:80"
-    depends_on:
-      - pocketbase
-    restart: unless-stopped
-
-  # PocketBase 数据库
-  pocketbase:
-    image: ghcr.io/muchobien/pocketbase:latest
+      - "3000:3000"
+    environment:
+      - APIMART_API_KEY=${APIMART_API_KEY}
     volumes:
-      - pb_data:/pb/pb_data
+      - app_data:/app/data
     restart: unless-stopped
-    # 不暴露端口，仅 Nginx 内部访问
 
 volumes:
-  pb_data:
+  app_data:

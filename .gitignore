@@ -12,6 +12,13 @@ dist
 dist-ssr
 *.local
 
+# Next.js
+.next/
+out/
+
+# Data
+data/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -30,3 +37,4 @@ pb_data/
 
 # Environment
 .env
+.env.local
