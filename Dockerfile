@@ -1,6 +1,7 @@
 FROM node:20-alpine AS base
 
 FROM base AS deps
+RUN apk add --no-cache python3 make g++
 WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 RUN corepack enable && pnpm install --frozen-lockfile
