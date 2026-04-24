@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { StatusBadge } from './StatusBadge';
 import type { StoredTask } from '@/lib/types';
 
@@ -131,8 +132,8 @@ export function TaskDetail({ taskId }: TaskDetailProps) {
       <div className="flex flex-col md:flex-row md:gap-6">
         <div className="md:flex-1 md:min-w-0">
           {imageUrl ? (
-            <div className="rounded-xl overflow-hidden bg-gray-100">
-              <img src={imageUrl} className="w-full object-contain md:max-h-[600px]" alt="Generated" />
+            <div className="relative rounded-xl overflow-hidden bg-gray-100">
+              <Image src={imageUrl} className="w-full object-contain md:max-h-[600px]" alt="Generated" width={1024} height={1024} sizes="(max-width: 768px) 100vw, 50vw" />
             </div>
           ) : (
             <div className="h-64 md:h-96 rounded-xl bg-gray-100 flex flex-col items-center justify-center text-gray-400 gap-2">

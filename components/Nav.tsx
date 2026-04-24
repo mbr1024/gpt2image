@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation';
 const tabs = [
   { id: '/create', label: '创建', icon: '✦' },
   { id: '/history', label: '历史', icon: '☰' },
-  { id: '/settings', label: '设置', icon: '⚙' },
 ];
 
 export function Nav() {

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { StatusBadge } from './StatusBadge';
 import type { StoredTask } from '@/lib/types';
 
@@ -16,9 +17,9 @@ export function TaskCard({ task }: TaskCardProps) {
       href={`/history/${task.task_id}`}
       className="bg-white rounded-xl border border-gray-200 cursor-pointer hover:border-gray-300 transition-colors flex gap-3 p-3 md:flex-col md:p-0 md:gap-0 md:overflow-hidden"
     >
-      <div className="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100 md:w-full md:h-48 md:rounded-none md:rounded-t-xl">
+      <div className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100 md:w-full md:h-48 md:rounded-none md:rounded-t-xl">
         {imageUrl ? (
-          <img src={imageUrl} className="w-full h-full object-cover" alt="" />
+          <Image src={imageUrl} className="w-full h-full object-cover" alt="" fill sizes="(max-width: 768px) 64px, 100vw" />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-gray-300 text-2xl">
             {status === 'failed' ? '!' : '...'}

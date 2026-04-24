@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <header className="flex-shrink-0 bg-white border-b border-gray-200 px-4 py-3 md:hidden">
               <h1 className="text-base font-semibold text-gray-900">GPT Image</h1>
             </header>
-            <main className="flex-1 overflow-y-auto">
+            <main className="flex-1 overflow-y-auto pb-14 md:pb-0">
               <div className="max-w-lg md:max-w-4xl mx-auto">
                 {children}
               </div>
