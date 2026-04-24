@@ -9,14 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "better-sqlite3": "^11.9.1",
     "next": "^15.3.2",
     "react": "^19.2.5",
     "react-dom": "^19.2.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.4",
-    "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^24.12.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
