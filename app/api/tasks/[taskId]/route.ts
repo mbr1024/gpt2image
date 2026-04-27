@@ -11,7 +11,7 @@ export async function GET(
   { params }: { params: Promise<{ taskId: string }> },
 ) {
   const { taskId } = await params;
-  const task = db.getTask(taskId);
+  const task = await db.getTask(taskId);
   if (!task) {
     return NextResponse.json({ error: '任务不存在' }, { status: 404 });
   }
@@ -20,8 +20,8 @@ export async function GET(
     try {
       const res = await apimart.queryTask(taskId);
       if (res.data) {
-        db.updateTaskFromApi(taskId, res.data);
-        const updated = db.getTask(taskId);
+        await db.updateTaskFromApi(taskId, res.data);
+        const updated = await db.getTask(taskId);
         return NextResponse.json(updated);
       }
     } catch {
@@ -37,6 +37,6 @@ export async function DELETE(
   { params }: { params: Promise<{ taskId: string }> },
 ) {
   const { taskId } = await params;
-  db.deleteTask(taskId);
+  await db.deleteTask(taskId);
   return NextResponse.json({ ok: true });
 }

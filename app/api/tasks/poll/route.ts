@@ -3,7 +3,7 @@ import * as db from '@/lib/db';
 import * as apimart from '@/lib/apimart';
 
 export async function POST() {
-  const activeTasks = db.getActiveTasks();
+  const activeTasks = await db.getActiveTasks();
 
   if (activeTasks.length === 0) {
     return NextResponse.json({ updated: 0 });
@@ -15,7 +15,7 @@ export async function POST() {
     try {
       const res = await apimart.queryTask(task.task_id);
       if (res.data) {
-        db.updateTaskFromApi(task.task_id, res.data);
+        await db.updateTaskFromApi(task.task_id, res.data);
         updated++;
       }
     } catch {
@@ -23,6 +23,6 @@ export async function POST() {
     }
   }
 
-  const tasks = db.getAllTasks();
+  const tasks = await db.getAllTasks();
   return NextResponse.json({ updated, tasks });
 }

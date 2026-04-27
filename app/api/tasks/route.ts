@@ -3,7 +3,7 @@ import * as db from '@/lib/db';
 import * as apimart from '@/lib/apimart';
 
 export async function GET() {
-  const tasks = db.getAllTasks();
+  const tasks = await db.getAllTasks();
   return NextResponse.json(tasks);
 }
 
@@ -24,7 +24,7 @@ export async function POST(request: Request) {
 
     const taskId = res.data[0].task_id;
 
-    db.createTask({
+    await db.createTask({
       task_id: taskId,
       prompt,
       size,
