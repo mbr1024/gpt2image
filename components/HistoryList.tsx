@@ -50,20 +50,17 @@ export function HistoryList() {
     return () => clearTimeout(debounceRef.current);
   }, [query]);
 
-  // 轮询
+  // 有活跃任务时定时刷新数据（后端已在轮询 Apimart，前端只读 DB）
   useEffect(() => {
     const hasActive = tasks.some(t =>
       t.status === 'submitted' || t.status === 'pending' || t.status === 'processing',
     );
     if (!hasActive) return;
 
-    const interval = setInterval(async () => {
+    const interval = setInterval(() => {
       if (document.visibilityState === 'hidden') return;
-      const res = await fetch('/api/tasks/poll', { method: 'POST' });
-      if (res.ok) {
-        fetchTasks(page, query, status, favorited);
-      }
-    }, 10000);
+      fetchTasks(page, query, status, favorited);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [tasks, page, query, status, favorited, fetchTasks]);

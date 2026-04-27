@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { StatusBadge } from './StatusBadge';
@@ -33,7 +33,6 @@ export function TaskDetail({ taskId }: TaskDetailProps) {
   const [downloading, setDownloading] = useState(false);
   const [tagInput, setTagInput] = useState('');
   const [showTagInput, setShowTagInput] = useState(false);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     let stopped = false;
@@ -51,10 +50,6 @@ export function TaskDetail({ taskId }: TaskDetailProps) {
           setTask(data);
           setTagInput(data.tags || '');
           setLoading(false);
-          if (!isActiveStatus(data.status) && intervalRef.current) {
-            clearInterval(intervalRef.current);
-            intervalRef.current = null;
-          }
         }
       } catch (err) {
         if (!stopped) {
@@ -65,20 +60,18 @@ export function TaskDetail({ taskId }: TaskDetailProps) {
     };
 
     fetchTask();
-    intervalRef.current = setInterval(fetchTask, 5000);
+
+    // 后端已在轮询 Apimart，前端只定时刷新 DB 数据
+    const interval = setInterval(() => {
+      if (document.visibilityState === 'hidden') return;
+      fetchTask();
+    }, 3000);
 
     return () => {
       stopped = true;
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      clearInterval(interval);
     };
   }, [taskId]);
-
-  useEffect(() => {
-    if (task && !isActiveStatus(task.status) && intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-  }, [task?.status]);
 
   const handleDelete = async () => {
     if (!confirm('确定删除此任务？')) return;

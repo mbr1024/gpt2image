@@ -2,7 +2,11 @@ import { NextResponse } from 'next/server';
 import * as db from '@/lib/db';
 import * as apimart from '@/lib/apimart';
 import { checkRateLimit } from '@/lib/rateLimit';
+import { ensurePollerStarted } from '@/lib/poller';
 import type { TaskFilters } from '@/lib/types';
+
+// 首次请求时启动后端轮询
+ensurePollerStarted();
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -21,7 +25,6 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  // 限流
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
     ?? request.headers.get('x-real-ip')
     ?? 'unknown';
