@@ -47,7 +47,9 @@ export function ImageUploader({ images, onChange }: ImageUploaderProps) {
         onDrop={handleDrop}
         onClick={() => inputRef.current?.click()}
         className={`border-2 border-dashed rounded-lg p-4 text-center cursor-pointer transition-colors ${
-          dragOver ? 'border-blue-400 bg-blue-50' : 'border-gray-300 hover:border-gray-400'
+          dragOver
+            ? 'border-blue-400 bg-blue-50 dark:bg-blue-900/20'
+            : 'border-[var(--border)] hover:border-[var(--text-tertiary)]'
         }`}
       >
         <input
@@ -58,7 +60,7 @@ export function ImageUploader({ images, onChange }: ImageUploaderProps) {
           className="hidden"
           onChange={e => e.target.files && addFiles(e.target.files)}
         />
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-[var(--text-secondary)]">
           点击或拖拽上传参考图（最多 16 张）
         </p>
       </div>

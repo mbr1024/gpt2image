@@ -16,11 +16,11 @@ export function SizeSelector({ value, onChange }: SizeSelectorProps) {
           className={`px-2 py-2 rounded-lg text-sm font-medium transition-colors ${
             value === ratio.value
               ? 'bg-blue-600 text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              : 'bg-[var(--hover)] text-[var(--text-secondary)] hover:bg-[var(--border)]'
           }`}
         >
           <div>{ratio.label}</div>
-          <div className={`text-xs ${value === ratio.value ? 'text-blue-200' : 'text-gray-400'}`}>
+          <div className={`text-xs ${value === ratio.value ? 'text-blue-200' : 'text-[var(--text-tertiary)]'}`}>
             {ratio.desc}
           </div>
         </button>

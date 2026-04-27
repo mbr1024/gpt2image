@@ -58,9 +58,25 @@ export interface StoredTask {
   status: string;
   progress: number;
   image_url: string;
+  persistent_url: string;
   expires_at: number;
   actual_time: number;
   estimated_time: number;
   error_message: string;
   completed_at: number;
+  is_favorited: boolean;
+  tags: string;
+}
+
+export interface TaskFilters {
+  q?: string;
+  status?: string;
+  favorited?: boolean;
+}
+
+export interface PaginatedResult<T> {
+  data: T[];
+  total: number;
+  page: number;
+  pageSize: number;
 }

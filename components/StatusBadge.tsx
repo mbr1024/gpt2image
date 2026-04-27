@@ -1,9 +1,9 @@
 const statusConfig: Record<string, { bg: string; text: string; label: string; pulse?: boolean }> = {
-  submitted: { bg: 'bg-gray-100', text: 'text-gray-600', label: '已提交' },
-  pending: { bg: 'bg-gray-100', text: 'text-gray-600', label: '排队中' },
-  processing: { bg: 'bg-amber-100', text: 'text-amber-700', label: '生成中', pulse: true },
-  completed: { bg: 'bg-green-100', text: 'text-green-700', label: '已完成' },
-  failed: { bg: 'bg-red-100', text: 'text-red-700', label: '失败' },
+  submitted: { bg: 'bg-gray-100 dark:bg-gray-800', text: 'text-gray-600 dark:text-gray-400', label: '已提交' },
+  pending: { bg: 'bg-gray-100 dark:bg-gray-800', text: 'text-gray-600 dark:text-gray-400', label: '排队中' },
+  processing: { bg: 'bg-amber-100 dark:bg-amber-900/30', text: 'text-amber-700 dark:text-amber-400', label: '生成中', pulse: true },
+  completed: { bg: 'bg-green-100 dark:bg-green-900/30', text: 'text-green-700 dark:text-green-400', label: '已完成' },
+  failed: { bg: 'bg-red-100 dark:bg-red-900/30', text: 'text-red-700 dark:text-red-400', label: '失败' },
 };
 
 export function StatusBadge({ status }: { status: string }) {

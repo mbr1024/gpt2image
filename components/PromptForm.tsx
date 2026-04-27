@@ -21,13 +21,38 @@ export function PromptForm() {
     setError('');
 
     try {
+      // 参考图先上传图床，拿到永久 URL
+      let imageUrls = images;
+      if (images.length > 0) {
+        const uploaded: string[] = [];
+        for (const img of images) {
+          try {
+            const res = await fetch('/api/upload', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ image: img }),
+            });
+            if (res.ok) {
+              const data = await res.json();
+              uploaded.push(data.url);
+            } else {
+              // 图床上传失败，fallback 用原始 base64
+              uploaded.push(img);
+            }
+          } catch {
+            uploaded.push(img);
+          }
+        }
+        imageUrls = uploaded;
+      }
+
       const res = await fetch('/api/tasks', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           prompt: prompt.trim(),
           size,
-          ...(images.length > 0 ? { image_urls: images } : {}),
+          ...(imageUrls.length > 0 ? { image_urls: imageUrls } : {}),
         }),
       });
 
@@ -50,18 +75,18 @@ export function PromptForm() {
   return (
     <div className="p-4 space-y-4">
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">描述</label>
+        <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1">描述</label>
         <textarea
           value={prompt}
           onChange={e => setPrompt(e.target.value)}
           placeholder="描述你想要生成的图片，例如：一只橘猫坐在窗台上看夕阳，水彩画风格"
           rows={4}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-3 py-2 border border-[var(--input-border)] bg-[var(--input-bg)] rounded-lg text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">比例</label>
+        <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">比例</label>
         <SizeSelector value={size} onChange={setSize} />
       </div>
 
@@ -69,7 +94,7 @@ export function PromptForm() {
         <button
           type="button"
           onClick={() => setShowRefImages(!showRefImages)}
-          className="text-sm text-blue-600 font-medium"
+          className="text-sm text-blue-600 dark:text-blue-400 font-medium"
         >
           {showRefImages ? '- 收起参考图' : '+ 添加参考图（图生图）'}
         </button>
@@ -81,7 +106,7 @@ export function PromptForm() {
       </div>
 
       {error && (
-        <div className="p-3 bg-red-50 text-red-600 text-sm rounded-lg">{error}</div>
+        <div className="p-3 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm rounded-lg">{error}</div>
       )}
 
       <button
